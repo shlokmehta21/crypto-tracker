@@ -1,0 +1,105 @@
+.menu_item_wrapper {
+  display: inline-block;
+}
+
+.cardContainer {
+  display: flex;
+  padding: 0px 8px 0px 0px;
+}
+
+.cardHolder {
+  box-sizing: border-box;
+  width: 304px;
+  background: rgb(50, 53, 70);
+  border-radius: 8px;
+  padding: 13px 16px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.coinImage img {
+  height: 64px;
+  width: 64px;
+  min-width: 64px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+}
+
+.coinInfo {
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.coinName {
+  color: rgb(182, 192, 224);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.coinPrice {
+  color: rgb(255, 255, 255);
+  white-space: pre-wrap;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-top: 18px;
+}
+
+.coinPercentageWrapper {
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.coinPercentage_success {
+  display: flex;
+  align-content: space-evenly;
+  padding: 3px 6px;
+  font-size: 12px;
+  background: green;
+  color: rgb(255, 255, 255);
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 18px;
+}
+
+.coinPercentage_negative {
+  display: flex;
+  align-content: space-evenly;
+  padding: 3px 6px;
+  font-size: 12px;
+  background: red;
+  color: rgb(255, 255, 255);
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 18px;
+}
+
+.icon {
+  width: 10px;
+  height: 10px;
+  align-self: center;
+  margin-right: 4px;
+}
+
+@media only screen and (max-width: 430px) {
+  .cardHolder {
+    width: 260px;
+  }
+  .coinPercentageWrapper {
+    margin-left: 45px;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .cardHolder {
+    width: 200px;
+  }
+  .coinPercentageWrapper {
+    visibility: hidden;
+  }
+}
