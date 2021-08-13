@@ -74,7 +74,7 @@ function SideDrawer({ isOpen, onClose }) {
           />
           CoinMarketCap
         </Typography>
-        <Close button onClick={onClose} className={classes.closeBtn} />
+        <Close button="true" onClick={onClose} className={classes.closeBtn} />
       </div>
       {list()}
     </Drawer>

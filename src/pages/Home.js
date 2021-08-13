@@ -1,16 +1,18 @@
-import { Container } from "@material-ui/core";
+import { Avatar, Container } from "@material-ui/core";
 import React from "react";
 import classes from "./Home.module.css";
-
 import { makeStyles } from "@material-ui/core/styles";
 import CardCarousal from "../components/CardCarousal";
+import CoinDataTable from "../components/CoinDataTable";
+import Chip from "@material-ui/core/Chip";
+import fireIcon from "../assets/fire.gif";
 
 const useStyles = makeStyles((theme) => {
   return {
     section: {
       boxSizing: "border-box",
       margin: "0px",
-      paddingTop: "4px",
+      paddingTop: "3px",
       paddingBottom: "16px",
       display: "flex",
       flexDirection: "column",
@@ -36,6 +38,16 @@ const useStyles = makeStyles((theme) => {
       margin: "0px",
       color: "rgb(161, 167, 187)",
       fontSize: "14px",
+    },
+    DataTable: {
+      marginTop: "50px",
+    },
+    chip: {
+      marginTop: "20px",
+      marginLeft: "20px",
+      backgroundColor: "rgba(56, 97, 251, 0.1)",
+      color: "rgb(97, 136, 255)",
+      fontWeight: "bold",
     },
   };
 });
@@ -77,6 +89,12 @@ export default function Home() {
 
       {/* total price description */}
       <Container>
+        <Chip
+          p={5}
+          avatar={<Avatar src={fireIcon} />}
+          label="Trending Coins"
+          className={classesMui.chip}
+        />
         <section className={classesMui.section}>
           {/* <div className={classesMui.head}>
             <Typography className={classesMui.headText} variant="h1">
@@ -95,6 +113,9 @@ export default function Home() {
             <CardCarousal />
           </div>
         </section>
+        <div className={classes.coinDataTable}>
+          <CoinDataTable />
+        </div>
       </Container>
     </>
   );

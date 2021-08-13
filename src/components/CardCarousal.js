@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Carousel, { consts } from "react-elastic-carousel";
 import CardItem from "./CardItem";
 import classes from "./CardCarousal.module.css";
@@ -53,7 +54,13 @@ function CardCarousal() {
         breakPoints={breakPoints}
       >
         {trendingCoins.map((coin) => (
-          <CardItem coin={coin} key={coin.id}></CardItem>
+          <Link
+            className={classes.links}
+            key={coin.id}
+            to={`/detail/${coin.id}`}
+          >
+            <CardItem coin={coin} key={coin.id}></CardItem>
+          </Link>
         ))}
       </Carousel>
     </div>
