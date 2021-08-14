@@ -17,28 +17,6 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
     },
-    head: {
-      boxSizing: "border-box",
-      margin: "0px",
-      flex: "1 1 0%",
-    },
-    headText: {
-      margin: "8px 0px 4px",
-      fontWeight: "bold",
-      fontSize: "14px",
-      lineHeight: "28px",
-      color: "rgb(255, 255, 255)",
-    },
-    sub: {
-      margin: "0px 4px 0px 0px",
-    },
-    subText: {
-      display: "inline",
-      lineHeight: "1.5",
-      margin: "0px",
-      color: "rgb(161, 167, 187)",
-      fontSize: "14px",
-    },
     DataTable: {
       marginTop: "50px",
     },
@@ -96,19 +74,6 @@ export default function Home() {
           className={classesMui.chip}
         />
         <section className={classesMui.section}>
-          {/* <div className={classesMui.head}>
-            <Typography className={classesMui.headText} variant="h1">
-              Today's Cryptocurrency Prices by Market Cap
-            </Typography>
-          </div>
-          <div>
-            <div className={classesMui.sub}>
-              <Typography className={classesMui.subText} variant="subtitle1">
-                The global crypto market cap is $1.84T, a<span> 1.06%</span>{" "}
-                increase over the last day.
-              </Typography>
-            </div>
-          </div> */}
           <div className={classes.carousal}>
             <CardCarousal />
           </div>
