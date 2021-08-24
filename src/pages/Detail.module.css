@@ -1,0 +1,334 @@
+.cointainer_details {
+  margin-top: 25px;
+}
+
+.coin_Name {
+  font-size: 32px;
+  line-height: 42px;
+  margin-right: 8px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 700;
+  margin: 0px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgb(255, 255, 255);
+}
+
+.coin_name_symbol {
+  word-break: initial;
+  background-color: #323546;
+  color: #a1a7bb;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  margin-left: 12px;
+  margin-right: 15px;
+}
+
+.add_icon {
+  width: auto;
+  padding: 0px 8px;
+  border-radius: 8px;
+  padding: 0px;
+  width: 32px;
+  -webkit-box-align: center;
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgb(50, 53, 70);
+  border-radius: 8px;
+  display: inline-flex;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  -webkit-box-pack: center;
+  justify-content: center;
+  outline: 0px;
+  font-weight: 600;
+  width: 3px;
+  height: 32px;
+  font-size: 12px;
+  padding: 0px 16px;
+  line-height: 18px;
+}
+
+.rankInfo {
+  box-sizing: border-box;
+  margin: 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rank {
+  background-color: #858ca2;
+  color: rgb(255, 255, 255);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.priceHeading {
+  color: #a1a7bb;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  margin-bottom: 4px;
+  text-align: right;
+  align-content: flex-end;
+}
+
+.priceSection {
+  margin-top: 14px;
+}
+
+.priceTitle {
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.priceValue {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 42px;
+  margin-right: 16px;
+  white-space: nowrap;
+}
+
+.pricePercentage {
+  white-space: nowrap;
+  border-radius: 8px;
+  padding: 3px 10px;
+  background-color: #ea3943;
+  color: rgb(255, 255, 255);
+}
+
+.statsContainer {
+  border-top: 1px solid #323546;
+  padding-top: 24px;
+  padding-bottom: 4px;
+}
+
+.statsLabel {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  color: #a1a7bb;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  box-sizing: border-box;
+  margin: 0px 0px 4px;
+  height: 23px;
+}
+
+.statsItem {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.statsValue {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.stats_percentage {
+  color: #ea3943;
+  padding: 0;
+  border-radius: 8px;
+  display: block;
+  margin-top: 0;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.volumetitle {
+  background-color: #323546;
+  color: #a1a7bb;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  margin-left: 4px;
+}
+
+.supplyValue {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  margin-right: 10px;
+  margin-left: 30px;
+}
+
+@media (min-width: 768px) {
+  .top_summary_container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .name_section {
+    flex: 0 0 50%;
+    padding-top: 25px;
+    padding-bottom: 8px;
+  }
+
+  .nameHeader {
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    word-break: break-word;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    margin: 0px 0px 16px;
+  }
+
+  .nameHeader img {
+    margin-right: 12px;
+    height: 32px;
+    aspect-ratio: auto 32 / 32;
+    width: 32px;
+  }
+
+  .coin_Name {
+    font-size: 24px;
+    line-height: 34px;
+  }
+
+  .priceSection {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50%;
+  }
+
+  .statsSection {
+    order: 5;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    margin: 0px 0px 8px;
+    margin-top: 15px;
+  }
+
+  .statsContainer {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .statsBlock {
+    padding-left: 0px;
+    grid-column: span 3 / auto;
+    border-bottom: none;
+    border-right: 1px solid #323546;
+    padding-left: 24px;
+    padding-top: 8px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .statsBlock:last-child {
+    border-right: none;
+  }
+
+  .statsItem {
+    display: block;
+  }
+}
+
+@media (max-width: 1376px) {
+  .statsContainer {
+    margin-top: 24px;
+  }
+  .stats_percentage {
+    margin-top: 8px;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1376px) {
+  .statsBlock {
+    grid-column: span 3 / auto;
+    padding-top: 12px;
+  }
+  .statsValue {
+    font-size: 16px;
+  }
+
+  .stats_percentage {
+    margin-top: 8px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .statsBlock {
+    display: block;
+    padding: 16px 0px;
+    padding-left: 16px;
+  }
+
+  .statsBlockInner {
+    display: flex;
+    -webkit-box-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 1;
+    flex-direction: column;
+  }
+
+  .statsLabel {
+    margin-bottom: 0px;
+  }
+
+  .statsValue {
+    margin-top: 3px;
+    font-size: 16px;
+    line-height: 26px;
+    margin: 4px 0px 8px;
+    color: #fff;
+  }
+}
+
+/* Mobile styles */
+/* Will add more styles */
+@media (min-width: 0px) and (max-width: 767px) {
+  .priceHeading {
+    align-content: flex-start;
+  }
+  .priceTitle {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+  .cointainer_details {
+    display: none;
+  }
+}

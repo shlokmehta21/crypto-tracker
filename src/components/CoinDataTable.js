@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import {
   makeStyles,
   Table,
@@ -78,8 +77,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function CoinDataTable() {
-  const [AllCoins, setAllCoins] = useState([]);
+function CoinDataTable({ Allcoin }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const classes = useStyles();
@@ -91,24 +89,6 @@ function CoinDataTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  const fetchAllCoins = () => {
-    axios
-      .get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=7d"
-      )
-      .then((response) => {
-        const data = response.data;
-        setAllCoins(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchAllCoins();
-  }, []);
 
   return (
     <>
@@ -128,13 +108,17 @@ function CoinDataTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {AllCoins.slice(
+            {Allcoin.slice(
               page * rowsPerPage,
               page * rowsPerPage + rowsPerPage
             ).map((coin) => (
               <TableRow key={coin.name} className={classes.dataRow}>
                 <TableCell className={classes.stickyIcon}>
-                  <StarBorderIcon button="true" fontSize="small" />
+                  <StarBorderIcon
+                    style={{ cursor: "pointer" }}
+                    button="true"
+                    fontSize="small"
+                  />
                 </TableCell>
                 <TableCell className={classes.stickyNumber}>
                   {coin.market_cap_rank}
@@ -212,7 +196,7 @@ function CoinDataTable() {
           className={classes.tblPagination}
           rowsPerPageOptions={[20, 50, 100]}
           component="div"
-          count={AllCoins.length}
+          count={Allcoin.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

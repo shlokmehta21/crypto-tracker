@@ -1,11 +1,13 @@
 import { Avatar, Container } from "@material-ui/core";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./Home.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import CardCarousal from "../components/CardCarousal";
 import CoinDataTable from "../components/CoinDataTable";
 import Chip from "@material-ui/core/Chip";
 import fireIcon from "../assets/fire.gif";
+import axios from "axios";
+import GlobalStat from "../components/GlobalStat";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -31,41 +33,46 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
+  const [AllCoins, setAllCoins] = useState([]);
+  const [trendingCoins, setTrendingCoins] = useState([]);
   const classesMui = useStyles();
+
+  const fetchAllCoins = () => {
+    axios
+      .get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=7d"
+      )
+      .then((response) => {
+        const data = response.data;
+        setAllCoins(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchTrendingCoins = () => {
+    axios
+      .get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
+      )
+      .then((response) => {
+        const data = response.data;
+        setTrendingCoins(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchTrendingCoins();
+    fetchAllCoins();
+  }, []);
+
   return (
     <>
-      {/* Global stats */}
-      <div className={classes.container}>
-        <div className={classes.global_stats_fade}>
-          <div className={classes.global_stat_content}>
-            <div className={classes.global_stat_inner_content}>
-              <span className={classes.item}>
-                Cryptos :<span className={classes.item_inner}>11,000</span>
-              </span>
-              <span className={classes.item}>
-                Market Cap:
-                <span className={classes.item_inner}> $1,825,190,610,965</span>
-              </span>
-              <span className={classes.item}>
-                24h Vol:
-                <span className={classes.item_inner}> $102,880,914,250</span>
-              </span>
-              <span className={classes.item}>
-                Dominance:
-                <span className={classes.item_inner}>
-                  BTC: 46.5% ETH: 19.7%
-                </span>
-              </span>
-              <span className={classes.item}>
-                ETH Gas:
-                <span className={classes.item_inner}> 42 Gwei</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* total price description */}
+      <GlobalStat />
       <Container>
         <Chip
           p={5}
@@ -75,11 +82,11 @@ export default function Home() {
         />
         <section className={classesMui.section}>
           <div className={classes.carousal}>
-            <CardCarousal />
+            <CardCarousal trendingcoin={trendingCoins} />
           </div>
         </section>
         <div className={classes.coinDataTable}>
-          <CoinDataTable />
+          <CoinDataTable Allcoin={AllCoins} />
         </div>
       </Container>
     </>
