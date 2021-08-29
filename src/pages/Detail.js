@@ -8,12 +8,24 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import classes from "./Detail.module.css";
 import { useHistory } from "react-router-dom";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
+import OverViewDetails from "../components/OverViewDetails";
+import HistoryChart from "../components/HistoryChart";
 
 function Detail() {
   const { id } = useParams();
   const [CoinDetails, setCoinDetails] = useState();
+  const [CoinGraphData, setCoinGraphData] = useState({});
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 767);
   const history = useHistory();
+
+  const formatData = (data) => {
+    return data.map((el) => {
+      return {
+        x: el[0],
+        y: el[1].toFixed(2),
+      };
+    });
+  };
 
   const fetchDetails = useCallback(() => {
     axios
@@ -21,7 +33,6 @@ function Detail() {
         `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false`
       )
       .then((response) => {
-        console.log(response.data);
         setCoinDetails(response.data);
       })
       .catch((err) => {
@@ -29,17 +40,59 @@ function Detail() {
       });
   }, [id]);
 
+  const changeClassName = useCallback(() => {
+    window.addEventListener(
+      "resize",
+      () => {
+        const ismobile = window.innerWidth < 767;
+        if (ismobile !== isMobile) setIsMobile(ismobile);
+      },
+      false
+    );
+  }, [isMobile]);
+
+  const FetchGraphData = useCallback(async () => {
+    const [day, week, year] = await Promise.all([
+      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
+        params: {
+          vs_currency: "usd",
+          days: "1",
+        },
+      }),
+      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
+        params: {
+          vs_currency: "usd",
+          days: "7",
+        },
+      }),
+      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
+        params: {
+          vs_currency: "usd",
+          days: "365",
+        },
+      }),
+    ]);
+
+    setCoinGraphData({
+      day: formatData(day.data.prices),
+      week: formatData(week.data.prices),
+      year: formatData(year.data.prices),
+    });
+  }, [id]);
+
   useEffect(() => {
     let mounted = true;
     if (mounted) {
       fetchDetails();
+      FetchGraphData();
+      changeClassName();
     }
     const cleanup = () => {
       mounted = false;
     };
 
     return cleanup();
-  }, [fetchDetails]);
+  }, [fetchDetails, FetchGraphData, changeClassName]);
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -49,7 +102,6 @@ function Detail() {
   return (
     <>
       <GlobalStat />
-
       {CoinDetails && (
         <Container>
           <div className={classes.cointainer_details}>
@@ -65,152 +117,8 @@ function Detail() {
               </Typography>
             </Breadcrumbs>
           </div>
-          <div>
-            <div className={classes.top_summary_container}>
-              <div className={classes.name_section}>
-                <div className={classes.nameHeader}>
-                  <img src={CoinDetails.image.small} alt="coinImg" />
-                  <h2 className={classes.coin_Name}>
-                    {CoinDetails.name}
-                    <small className={classes.coin_name_symbol}>
-                      {CoinDetails.symbol.toUpperCase()}
-                    </small>
-                  </h2>
-                  <span className={classes.add_icon}>
-                    <StarBorderIcon
-                      style={{ cursor: "pointer" }}
-                      button="true"
-                      fontSize="small"
-                    />
-                  </span>
-                </div>
-                <div className={classes.rankInfo}>
-                  <div className={classes.rank}>
-                    Rank #{CoinDetails.market_cap_rank}
-                  </div>
-                </div>
-              </div>
-              <div className={classes.priceSection}>
-                <h1 className={classes.priceHeading}>
-                  {CoinDetails.name} Price ({CoinDetails.symbol.toUpperCase()})
-                </h1>
-                <div className={classes.priceTitle}>
-                  <div className={classes.priceValue}>
-                    $
-                    {CoinDetails.market_data.current_price.usd.toLocaleString()}
-                  </div>
-                  <span className={classes.pricePercentage}>
-                    {CoinDetails.market_data.price_change_percentage_24h.toFixed(
-                      2
-                    )}
-                    %
-                  </span>
-                </div>
-              </div>
-              <div className={classes.statsSection}>
-                <div className={classes.statsContainer}>
-                  <div className={classes.statsBlock}>
-                    <div className={classes.statsBlockInner}>
-                      <div className={classes.statsLabel}>Market Cap</div>
-                      <div className={classes.statsItem}>
-                        <div className={classes.statsValue}>
-                          ${" "}
-                          {CoinDetails.market_data.market_cap.usd.toLocaleString()}
-                        </div>
-                        <span className={classes.stats_percentage}>
-                          {CoinDetails.market_data.market_cap_change_percentage_24h.toFixed(
-                            2
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={classes.statsBlock}>
-                    <div className={classes.statsBlockInner}>
-                      <div className={classes.statsLabel}>
-                        Fully Diluted Market Cap
-                      </div>
-                      <div className={classes.statsItem}>
-                        <div className={classes.statsValue}>
-                          ${" "}
-                          {typeof CoinDetails.market_data
-                            .fully_diluted_valuation === {}
-                            ? "-"
-                            : CoinDetails.market_data.fully_diluted_valuation
-                                .usd}
-                        </div>
-
-                        <span className={classes.stats_percentage}>
-                          {CoinDetails.market_data.market_cap_change_percentage_24h.toFixed(
-                            2
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={classes.statsBlock}>
-                    <div className={classes.statsBlockInner}>
-                      <div className={classes.statsLabel}>
-                        Volume
-                        <div className={classes.volumetitle}>24h</div>
-                      </div>
-                      <div className={classes.statsItem}>
-                        <div className={classes.statsValue}>
-                          ${" "}
-                          {CoinDetails.market_data.total_volume.usd.toLocaleString()}
-                        </div>
-                        <span className={classes.stats_percentage}>
-                          {CoinDetails.market_data.price_change_percentage_7d.toFixed(
-                            2
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={classes.statsBlock}>
-                    <div className={classes.statsBlockInner}>
-                      <div className={classes.statsLabel}>
-                        Circulating Supply
-                      </div>
-                      <div className={classes.statsItem}>
-                        <div className={classes.statsValue}>
-                          {CoinDetails.market_data.circulating_supply.toLocaleString()}{" "}
-                          {""} {CoinDetails.symbol.toUpperCase()}
-                        </div>
-                        <div
-                          className={classes.statsLabel}
-                          style={{
-                            marginTop: "10px",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          Max Supply
-                          <div className={classes.supplyValue}>
-                            {CoinDetails.market_data.max_supply}
-                          </div>
-                        </div>
-                        <div
-                          className={classes.statsLabel}
-                          style={{
-                            marginTop: "5px",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          Total Supply
-                          <div className={classes.supplyValue}>
-                            {CoinDetails.market_data.total_supply}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <OverViewDetails CoinDetails={CoinDetails} isMobile={isMobile} />
+          <HistoryChart Chartdata={CoinGraphData} CoinDetails={CoinDetails} />
         </Container>
       )}
     </>

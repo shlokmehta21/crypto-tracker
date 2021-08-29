@@ -1,13 +1,15 @@
-import { Avatar, Container } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import { Avatar, Button, Container } from "@material-ui/core";
+import React, { useState, useEffect, useContext } from "react";
 import classes from "./Home.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import CardCarousal from "../components/CardCarousal";
 import CoinDataTable from "../components/CoinDataTable";
 import Chip from "@material-ui/core/Chip";
-import fireIcon from "../assets/fire.gif";
+import tredingIcon from "../assets/trending.png";
 import axios from "axios";
 import GlobalStat from "../components/GlobalStat";
+import { WatchListContext } from "../Context/WatchListContext";
+import StarOutlineIcon from "@material-ui/icons/StarOutline";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -35,7 +37,10 @@ const useStyles = makeStyles((theme) => {
 export default function Home() {
   const [AllCoins, setAllCoins] = useState([]);
   const [trendingCoins, setTrendingCoins] = useState([]);
+  const [watchCoins, setWatchCoins] = useState([]);
+  const [showWatchCoins, setShowWatchCoins] = useState(false);
   const classesMui = useStyles();
+  const { watchList } = useContext(WatchListContext);
 
   const fetchAllCoins = () => {
     axios
@@ -65,10 +70,35 @@ export default function Home() {
       });
   };
 
+  const fetchWatchListCoins = () => {
+    axios
+      .get("https://api.coingecko.com/api/v3/coins/markets/", {
+        params: {
+          vs_currency: "usd",
+          ids: watchList.join(","),
+          order: "market_cap_desc",
+          sparkline: true,
+        },
+      })
+      .then((response) => {
+        const data = response.data;
+        setWatchCoins(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     fetchTrendingCoins();
     fetchAllCoins();
-  }, []);
+    if (watchList.length > 0) {
+      fetchWatchListCoins();
+    } else {
+      console.log("empty watch list");
+      setWatchCoins([]);
+    }
+  }, [watchList]);
 
   return (
     <>
@@ -76,7 +106,7 @@ export default function Home() {
       <Container>
         <Chip
           p={5}
-          avatar={<Avatar src={fireIcon} />}
+          avatar={<Avatar src={tredingIcon} />}
           label="Trending Coins"
           className={classesMui.chip}
         />
@@ -86,7 +116,18 @@ export default function Home() {
           </div>
         </section>
         <div className={classes.coinDataTable}>
-          <CoinDataTable Allcoin={AllCoins} />
+          <Button onClick={() => setShowWatchCoins(true)}>
+            <StarOutlineIcon fontSize="small" />
+            WatchList
+          </Button>
+          <Button onClick={() => setShowWatchCoins(false)}>
+            Cryptocurrency
+          </Button>
+          {showWatchCoins === true ? (
+            <CoinDataTable Allcoin={watchCoins} watchCoins={watchCoins} />
+          ) : (
+            <CoinDataTable Allcoin={AllCoins} watchCoins={watchCoins} />
+          )}
         </div>
       </Container>
     </>
