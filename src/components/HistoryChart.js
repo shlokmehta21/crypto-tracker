@@ -5,7 +5,7 @@ import classes from "./HistoryChart.module.css";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-function HistoryChart({ Chartdata, CoinDetails }) {
+function HistoryChart({ Chartdata, CoinDetails, isMobile }) {
   const { day, week, year } = Chartdata;
   const [timeFormat, setTimeFormat] = useState("24h");
 
@@ -66,6 +66,8 @@ function HistoryChart({ Chartdata, CoinDetails }) {
     },
   };
 
+  const chartHeight = isMobile ? 558 : 450;
+
   return (
     <>
       <div className={classes.heading}>
@@ -80,7 +82,7 @@ function HistoryChart({ Chartdata, CoinDetails }) {
         </ButtonGroup>
       </div>
       <div className={classes.Chart}>
-        <Line data={data} options={options} width={801} height={558} />
+        <Line data={data} options={options} width={801} height={chartHeight} />
       </div>
     </>
   );

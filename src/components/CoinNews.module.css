@@ -1,0 +1,175 @@
+.newsContainer {
+  box-sizing: border-box;
+  margin-top: 25px;
+}
+
+.head {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.Coinname {
+  margin: 0px 24px 0px 0px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgb(255, 255, 255);
+}
+
+.newsCard {
+  margin-top: 12px;
+  margin-left: -16px;
+  margin-right: -16px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.cardContainer {
+  margin-bottom: 16px;
+}
+
+/* .cardWrapper {
+  width: calc(54% - 16px);
+} */
+
+.card {
+  text-decoration: none;
+  line-height: 1;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: all 0.2s ease 0s;
+}
+
+.card:hover {
+  background-color: #323546;
+}
+.cardTitle {
+  margin: 0px;
+  font-weight: 700;
+  line-height: 28px;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+}
+
+.icon {
+  margin-left: 4px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.description {
+  line-height: 1.5;
+  margin: 12px 0px 0px;
+  color: rgb(161, 167, 187);
+  font-size: 14px;
+}
+
+.details {
+  margin-top: 16px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.details span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.source {
+  line-height: 1.5;
+  margin: 0px;
+  color: rgb(255, 255, 255);
+  font-size: 0px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.time {
+  line-height: 1;
+  margin-left: 4px;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+
+.coinDesc {
+  margin-left: 8px;
+  padding: 4px 8px 4px 6px;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: rgb(60 64 79);
+  border-radius: 16px;
+  line-height: 1;
+}
+
+.coinDesc img {
+  width: 16px;
+}
+
+.coin_name_desc {
+  margin: 0px 0px 0px 5px;
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.newsImg {
+  padding-bottom: 18%;
+  flex: 0 0 30%;
+  max-width: 30%;
+  position: relative;
+  height: 0px;
+}
+
+.newsImg img {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-left: 8px;
+}
+
+@media (max-width: 1199.98px) {
+  .newsCard {
+    width: 100%;
+  }
+  .content {
+    flex: 0 0 65%;
+    max-width: 100%;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  .description {
+    margin-top: 8px;
+  }
+  .newsImg {
+    padding-bottom: 14%;
+    flex: 0 0 22%;
+    max-width: 22%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .Coinname {
+    font-size: 24px;
+    line-height: 34px;
+  }
+}

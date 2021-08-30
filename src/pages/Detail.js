@@ -10,6 +10,7 @@ import classes from "./Detail.module.css";
 import { useHistory } from "react-router-dom";
 import OverViewDetails from "../components/OverViewDetails";
 import HistoryChart from "../components/HistoryChart";
+import CoinNews from "../components/CoinNews";
 
 function Detail() {
   const { id } = useParams();
@@ -118,7 +119,12 @@ function Detail() {
             </Breadcrumbs>
           </div>
           <OverViewDetails CoinDetails={CoinDetails} isMobile={isMobile} />
-          <HistoryChart Chartdata={CoinGraphData} CoinDetails={CoinDetails} />
+          <HistoryChart
+            Chartdata={CoinGraphData}
+            CoinDetails={CoinDetails}
+            isMobile={isMobile}
+          />
+          <CoinNews />
         </Container>
       )}
     </>
