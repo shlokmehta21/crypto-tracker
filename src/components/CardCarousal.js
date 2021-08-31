@@ -13,7 +13,7 @@ const breakPoints = [
   { width: 1200, itemsToShow: 4 },
 ];
 
-function CardCarousal({ trendingcoin }) {
+function CardCarousal({ trendingcoin, isLoading }) {
   return (
     <div className="carousel-wrapper">
       <Carousel

@@ -100,11 +100,19 @@
   white-space: nowrap;
 }
 
-.pricePercentage {
+.pricePercentage_negative {
   white-space: nowrap;
   border-radius: 8px;
   padding: 3px 10px;
   background-color: #ea3943;
+  color: rgb(255, 255, 255);
+}
+
+.pricePercentage_positive {
+  white-space: nowrap;
+  border-radius: 8px;
+  padding: 3px 10px;
+  background-color: #068f18;
   color: rgb(255, 255, 255);
 }
 
@@ -147,7 +155,7 @@
   align-items: center;
 }
 
-.stats_percentage {
+.stats_percentage_negative {
   color: #ea3943;
   padding: 0;
   border-radius: 8px;
@@ -157,6 +165,18 @@
   font-weight: 600;
   margin-top: 4px;
 }
+
+.stats_percentage_positive {
+  color: #3fea39;
+  padding: 0;
+  border-radius: 8px;
+  display: block;
+  margin-top: 0;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
 .volumetitle {
   background-color: #323546;
   color: #a1a7bb;

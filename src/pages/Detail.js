@@ -11,13 +11,40 @@ import { useHistory } from "react-router-dom";
 import OverViewDetails from "../components/OverViewDetails";
 import HistoryChart from "../components/HistoryChart";
 import CoinNews from "../components/CoinNews";
+import Chip from "@material-ui/core/Chip";
+import { makeStyles } from "@material-ui/core/styles";
+import { Avatar } from "@material-ui/core";
+import newsIcon from "../assets/newspaper.png";
+import { Button } from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
+const useStyles = makeStyles((theme) => {
+  return {
+    chip: {
+      marginTop: "40px",
+      backgroundColor: "rgba(56, 97, 251, 0.1)",
+      color: "rgb(97, 136, 255)",
+      fontWeight: "bold",
+    },
+    loadBtn: {
+      marginTop: "10px",
+      width: "100%",
+      marginBottom: "20px",
+      backgroundColor: "rgb(50, 53, 70)",
+    },
+  };
+});
 
 function Detail() {
   const { id } = useParams();
   const [CoinDetails, setCoinDetails] = useState();
   const [CoinGraphData, setCoinGraphData] = useState({});
+  const [NewsData, setNewsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 767);
+  const [page, setPage] = useState(5);
   const history = useHistory();
+  const classesMui = useStyles();
 
   const formatData = (data) => {
     return data.map((el) => {
@@ -27,19 +54,6 @@ function Detail() {
       };
     });
   };
-
-  const fetchDetails = useCallback(() => {
-    axios
-      .get(
-        `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false`
-      )
-      .then((response) => {
-        setCoinDetails(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
 
   const changeClassName = useCallback(() => {
     window.addEventListener(
@@ -53,7 +67,7 @@ function Detail() {
   }, [isMobile]);
 
   const FetchGraphData = useCallback(async () => {
-    const [day, week, year] = await Promise.all([
+    const [day, week, year, news, details] = await Promise.all([
       axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
         params: {
           vs_currency: "usd",
@@ -72,6 +86,16 @@ function Detail() {
           days: "365",
         },
       }),
+      axios.get(`https://newsapi.org/v2/everything/`, {
+        params: {
+          q: id,
+          pageSize: page,
+          apiKey: "f1a0b35637594c8fbdafccea17b09bcf",
+        },
+      }),
+      axios.get(
+        `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false`
+      ),
     ]);
 
     setCoinGraphData({
@@ -79,12 +103,15 @@ function Detail() {
       week: formatData(week.data.prices),
       year: formatData(year.data.prices),
     });
-  }, [id]);
+
+    setNewsData(news.data.articles);
+    setCoinDetails(details.data);
+    setIsLoading(false);
+  }, [id, page]);
 
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      fetchDetails();
       FetchGraphData();
       changeClassName();
     }
@@ -93,7 +120,7 @@ function Detail() {
     };
 
     return cleanup();
-  }, [fetchDetails, FetchGraphData, changeClassName]);
+  }, [FetchGraphData, changeClassName]);
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -103,7 +130,9 @@ function Detail() {
   return (
     <>
       <GlobalStat />
-      {CoinDetails && (
+      {isLoading ? (
+        <LinearProgress />
+      ) : (
         <Container>
           <div className={classes.cointainer_details}>
             <Breadcrumbs aria-label="breadcrumb">
@@ -124,7 +153,25 @@ function Detail() {
             CoinDetails={CoinDetails}
             isMobile={isMobile}
           />
-          <CoinNews />
+          <Chip
+            p={5}
+            avatar={<Avatar src={newsIcon} />}
+            label={`${CoinDetails.name} News`}
+            className={classesMui.chip}
+          />
+          {NewsData.map((data) => (
+            <CoinNews
+              key={data.url}
+              newsdata={data}
+              CoinDetails={CoinDetails}
+            />
+          ))}
+          <Button
+            className={classesMui.loadBtn}
+            onClick={() => setPage((prevpage) => prevpage + 5)}
+          >
+            Read More
+          </Button>
         </Container>
       )}
     </>

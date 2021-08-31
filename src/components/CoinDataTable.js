@@ -20,6 +20,7 @@ import { ReactComponent as Down } from "../assets/down.svg";
 import { ReactComponent as Up } from "../assets/up.svg";
 import StarIcon from "@material-ui/icons/Star";
 import { WatchListContext } from "../Context/WatchListContext";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const TableCell = withStyles({
   root: {
@@ -29,6 +30,9 @@ const TableCell = withStyles({
 
 const useStyles = makeStyles((theme) => {
   return {
+    TableContainer: {
+      backgroundColor: "rgb(23, 23, 26)",
+    },
     table: {
       minWidth: 650,
       backgroundColor: "rgb(23, 23, 26)",
@@ -101,6 +105,9 @@ function CoinDataTable({ Allcoin, watchCoins }) {
     addCoin(id);
   };
 
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, Allcoin.length - page * rowsPerPage);
+
   return (
     <>
       {watchCoins.length === 0 ? (
@@ -129,19 +136,23 @@ function CoinDataTable({ Allcoin, watchCoins }) {
                 <TableRow key={coin.name} className={classes.dataRow}>
                   <TableCell className={classes.stickyIcon}>
                     {watchList.indexOf(coin.id) !== -1 ? (
-                      <StarIcon
-                        style={{ cursor: "pointer" }}
-                        button="true"
-                        fontSize="small"
-                        onClick={() => handleDelete(coin.id)}
-                      />
+                      <Tooltip title="Delete">
+                        <StarIcon
+                          style={{ cursor: "pointer" }}
+                          button="true"
+                          fontSize="small"
+                          onClick={() => handleDelete(coin.id)}
+                        />
+                      </Tooltip>
                     ) : (
-                      <StarBorderIcon
-                        style={{ cursor: "pointer" }}
-                        button="true"
-                        fontSize="small"
-                        onClick={() => handleAddCoin(coin.id)}
-                      />
+                      <Tooltip title="Add">
+                        <StarBorderIcon
+                          style={{ cursor: "pointer" }}
+                          button="true"
+                          fontSize="small"
+                          onClick={() => handleAddCoin(coin.id)}
+                        />
+                      </Tooltip>
                     )}
                   </TableCell>
                   <TableCell className={classes.stickyNumber}>
@@ -219,6 +230,11 @@ function CoinDataTable({ Allcoin, watchCoins }) {
                   </TableCell>
                 </TableRow>
               ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
             </TableBody>
           </Table>
           <TablePagination

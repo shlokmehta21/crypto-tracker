@@ -44,7 +44,7 @@ function Appbar({ onOpen }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h5" className={classes.title}>
+          <Typography variant="h6" className={classes.title}>
             <img
               className={classes.logo}
               height="28px"

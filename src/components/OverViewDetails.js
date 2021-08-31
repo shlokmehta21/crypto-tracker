@@ -58,7 +58,14 @@ function OverViewDetails({ CoinDetails, isMobile }) {
             <div className={classes.priceValue}>
               ${CoinDetails.market_data.current_price.usd.toLocaleString()}
             </div>
-            <span className={classes.pricePercentage}>
+            <span
+              className={
+                CoinDetails.market_data.price_change_percentage_24h.toFixed(2) <
+                0
+                  ? classes.pricePercentage_negative
+                  : classes.pricePercentage_positive
+              }
+            >
               {CoinDetails.market_data.price_change_percentage_24h.toFixed(2)}%
             </span>
           </div>
@@ -72,7 +79,14 @@ function OverViewDetails({ CoinDetails, isMobile }) {
                   <div className={classes.statsValue}>
                     $ {CoinDetails.market_data.market_cap.usd.toLocaleString()}
                   </div>
-                  <span className={classes.stats_percentage}>
+                  <span
+                    className={
+                      CoinDetails.market_data.market_cap_change_percentage_24h <
+                      0
+                        ? classes.stats_percentage_negative
+                        : classes.stats_percentage_positive
+                    }
+                  >
                     {CoinDetails.market_data.market_cap_change_percentage_24h.toFixed(
                       2
                     )}
@@ -95,7 +109,14 @@ function OverViewDetails({ CoinDetails, isMobile }) {
                       : CoinDetails.market_data.fully_diluted_valuation.usd}
                   </div>
 
-                  <span className={classes.stats_percentage}>
+                  <span
+                    className={
+                      CoinDetails.market_data.market_cap_change_percentage_24h <
+                      0
+                        ? classes.stats_percentage_negative
+                        : classes.stats_percentage_positive
+                    }
+                  >
                     {CoinDetails.market_data.market_cap_change_percentage_24h.toFixed(
                       2
                     )}
@@ -115,7 +136,13 @@ function OverViewDetails({ CoinDetails, isMobile }) {
                     ${" "}
                     {CoinDetails.market_data.total_volume.usd.toLocaleString()}
                   </div>
-                  <span className={classes.stats_percentage}>
+                  <span
+                    className={
+                      CoinDetails.market_data.price_change_percentage_7d < 0
+                        ? classes.stats_percentage_negative
+                        : classes.stats_percentage_positive
+                    }
+                  >
                     {CoinDetails.market_data.price_change_percentage_7d.toFixed(
                       2
                     )}

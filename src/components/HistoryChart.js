@@ -4,10 +4,25 @@ import "chartjs-adapter-date-fns";
 import classes from "./HistoryChart.module.css";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Chip from "@material-ui/core/Chip";
+import { makeStyles } from "@material-ui/core/styles";
+import { Avatar } from "@material-ui/core";
+import ChartIcon from "../assets/bar-graph.png";
+
+const useStyles = makeStyles((theme) => {
+  return {
+    chip: {
+      backgroundColor: "rgba(56, 97, 251, 0.1)",
+      color: "rgb(97, 136, 255)",
+      fontWeight: "bold",
+    },
+  };
+});
 
 function HistoryChart({ Chartdata, CoinDetails, isMobile }) {
   const { day, week, year } = Chartdata;
   const [timeFormat, setTimeFormat] = useState("24h");
+  const classesMui = useStyles();
 
   const determineTimeFormat = () => {
     switch (timeFormat) {
@@ -21,16 +36,41 @@ function HistoryChart({ Chartdata, CoinDetails, isMobile }) {
         return day;
     }
   };
-  const data = {
-    datasets: [
-      {
-        label: `${CoinDetails.name} Price`,
-        data: determineTimeFormat(),
-        fill: false,
-        backgroundColor: "	rgb(124,252,0)",
-        borderColor: "	rgb(124,252,0)",
-      },
-    ],
+
+  const changeColorOnTimeFormat = () => {
+    switch (timeFormat) {
+      case "24h":
+        return CoinDetails.market_data.price_change_percentage_24h;
+      case "7d":
+        return CoinDetails.market_data.price_change_percentage_7d;
+      case "1y":
+        return CoinDetails.market_data.price_change_percentage_1y;
+      default:
+        return CoinDetails.market_data.price_change_percentage_24h;
+    }
+  };
+
+  const color = changeColorOnTimeFormat();
+  const BorderColor = color < 0 ? "rgb(228, 10, 10)" : "rgb(124,252,0)";
+  const StartColor = color < 0 ? "rgb(228, 10, 10, .7)" : "rgba(124,252,0,.7)";
+  const EndColor = color < 0 ? "rgb(228, 10, 10, .0)" : "rgba(124,252,0,0)";
+  const data = (canvas) => {
+    const ctx = canvas.getContext("2d");
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, StartColor);
+    gradient.addColorStop(1, EndColor);
+
+    return {
+      datasets: [
+        {
+          label: `${CoinDetails.name} Price`,
+          data: determineTimeFormat(),
+          fill: true,
+          backgroundColor: gradient,
+          borderColor: BorderColor,
+        },
+      ],
+    };
   };
 
   const options = {
@@ -38,6 +78,11 @@ function HistoryChart({ Chartdata, CoinDetails, isMobile }) {
       always: true,
       hover: true,
       lineWeight: 1.5,
+      showTooltips: true,
+    },
+    hover: {
+      mode: "index",
+      intersect: false,
     },
 
     animation: {
@@ -71,7 +116,12 @@ function HistoryChart({ Chartdata, CoinDetails, isMobile }) {
   return (
     <>
       <div className={classes.heading}>
-        <div>{`${CoinDetails.name} to USD Chart`}</div>
+        <Chip
+          p={5}
+          avatar={<Avatar src={ChartIcon} />}
+          label={`${CoinDetails.name} to USD Chart`}
+          className={classesMui.chip}
+        />
         <ButtonGroup
           size="small"
           aria-label="small outlined primary button group"
