@@ -110,145 +110,141 @@ function CoinDataTable({ Allcoin, watchCoins }) {
 
   return (
     <>
-      {watchCoins.length === 0 ? (
-        <div style={{ color: "white" }}>NO WATCH LIST</div>
-      ) : (
-        <TableContainer component={Paper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.stickyIcon}></TableCell>
-                <TableCell className={classes.stickyNumber}>#</TableCell>
-                <TableCell className={classes.stickyName}>Name</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">24h%</TableCell>
-                <TableCell align="right">Market Cap</TableCell>
-                <TableCell align="right">Volume(24h)</TableCell>
-                <TableCell align="right">Circulating Supply</TableCell>
-                <TableCell align="right">Last 7 Days</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Allcoin.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              ).map((coin) => (
-                <TableRow key={coin.name} className={classes.dataRow}>
-                  <TableCell className={classes.stickyIcon}>
-                    {watchList.indexOf(coin.id) !== -1 ? (
-                      <Tooltip title="Delete">
-                        <StarIcon
-                          style={{ cursor: "pointer" }}
-                          button="true"
-                          fontSize="small"
-                          onClick={() => handleDelete(coin.id)}
-                        />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title="Add">
-                        <StarBorderIcon
-                          style={{ cursor: "pointer" }}
-                          button="true"
-                          fontSize="small"
-                          onClick={() => handleAddCoin(coin.id)}
-                        />
-                      </Tooltip>
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.stickyNumber}>
-                    {coin.market_cap_rank}
-                  </TableCell>
-                  <TableCell
-                    className={classes.stickyName}
-                    component="th"
-                    scope="row"
-                    mr={4}
-                  >
-                    <Link className={classes.links} to={`/detail/${coin.id}`}>
-                      <Grid container wrap="nowrap">
-                        <Grid item xs={5} sm={6} md={6} lg={3} xl={3}>
-                          <Avatar className={classes.avatar} src={coin.image} />
-                        </Grid>
-                        <Grid
-                          item
-                          xs={3}
-                          sm={6}
-                          md={6}
-                          lg={9}
-                          xl={9}
-                          className={classes.Coinname}
-                        >
-                          {coin.name} {coin.symbol.toUpperCase()}
-                        </Grid>
-                      </Grid>
-                    </Link>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Link className={classes.links} to={`/detail/${coin.id}`}>
-                      ${coin.current_price.toLocaleString()}
-                    </Link>
-                  </TableCell>
-                  <TableCell
-                    align="right"
-                    className={
-                      coin.price_change_percentage_24h > 0
-                        ? classes.hourChange
-                        : classes.hourChangeNeg
-                    }
-                  >
+      <TableContainer component={Paper}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.stickyIcon}></TableCell>
+              <TableCell className={classes.stickyNumber}>#</TableCell>
+              <TableCell className={classes.stickyName}>Name</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">24h%</TableCell>
+              <TableCell align="right">Market Cap</TableCell>
+              <TableCell align="right">Volume(24h)</TableCell>
+              <TableCell align="right">Circulating Supply</TableCell>
+              <TableCell align="right">Last 7 Days</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Allcoin.slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            ).map((coin) => (
+              <TableRow key={coin.name} className={classes.dataRow}>
+                <TableCell className={classes.stickyIcon}>
+                  {watchList.indexOf(coin.id) !== -1 ? (
+                    <Tooltip title="Delete">
+                      <StarIcon
+                        style={{ cursor: "pointer" }}
+                        button="true"
+                        fontSize="small"
+                        onClick={() => handleDelete(coin.id)}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Add">
+                      <StarBorderIcon
+                        style={{ cursor: "pointer" }}
+                        button="true"
+                        fontSize="small"
+                        onClick={() => handleAddCoin(coin.id)}
+                      />
+                    </Tooltip>
+                  )}
+                </TableCell>
+                <TableCell className={classes.stickyNumber}>
+                  {coin.market_cap_rank}
+                </TableCell>
+                <TableCell
+                  className={classes.stickyName}
+                  component="th"
+                  scope="row"
+                  mr={4}
+                >
+                  <Link className={classes.links} to={`/detail/${coin.id}`}>
                     <Grid container wrap="nowrap">
                       <Grid item xs={5} sm={6} md={6} lg={3} xl={3}>
-                        {coin.price_change_percentage_24h > 0 ? (
-                          <Up fill="green" />
-                        ) : (
-                          <Down fill="red" />
-                        )}
+                        <Avatar className={classes.avatar} src={coin.image} />
                       </Grid>
-                      <Grid item xs={3} sm={6} md={6} lg={9} xl={9}>
-                        {coin.price_change_percentage_24h.toFixed(1)}
+                      <Grid
+                        item
+                        xs={3}
+                        sm={6}
+                        md={6}
+                        lg={9}
+                        xl={9}
+                        className={classes.Coinname}
+                      >
+                        {coin.name} {coin.symbol.toUpperCase()}
                       </Grid>
                     </Grid>
-                  </TableCell>
+                  </Link>
+                </TableCell>
+                <TableCell align="right">
+                  <Link className={classes.links} to={`/detail/${coin.id}`}>
+                    ${coin.current_price.toLocaleString()}
+                  </Link>
+                </TableCell>
+                <TableCell
+                  align="right"
+                  className={
+                    coin.price_change_percentage_24h > 0
+                      ? classes.hourChange
+                      : classes.hourChangeNeg
+                  }
+                >
+                  <Grid container wrap="nowrap">
+                    <Grid item xs={5} sm={6} md={6} lg={3} xl={3}>
+                      {coin.price_change_percentage_24h > 0 ? (
+                        <Up fill="green" />
+                      ) : (
+                        <Down fill="red" />
+                      )}
+                    </Grid>
+                    <Grid item xs={3} sm={6} md={6} lg={9} xl={9}>
+                      {coin.price_change_percentage_24h.toFixed(1)}
+                    </Grid>
+                  </Grid>
+                </TableCell>
 
-                  <TableCell align="right">
-                    ${coin.market_cap.toLocaleString()}
-                  </TableCell>
-                  <TableCell align="right">
-                    ${coin.total_volume.toLocaleString()}
-                  </TableCell>
-                  <TableCell align="right">
-                    {coin.circulating_supply.toLocaleString()}{" "}
-                    {coin.symbol.toUpperCase()}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Link className={classes.links} to={`/detail/${coin.id}`}>
-                      <SmallLineChart
-                        data={coin.sparkline_in_7d}
-                        per7Change={coin.price_change_percentage_7d_in_currency}
-                      />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <TablePagination
-            className={classes.tblPagination}
-            rowsPerPageOptions={[20, 50, 100]}
-            component="div"
-            count={Allcoin.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </TableContainer>
-      )}
+                <TableCell align="right">
+                  ${coin.market_cap.toLocaleString()}
+                </TableCell>
+                <TableCell align="right">
+                  ${coin.total_volume.toLocaleString()}
+                </TableCell>
+                <TableCell align="right">
+                  {coin.circulating_supply.toLocaleString()}{" "}
+                  {coin.symbol.toUpperCase()}
+                </TableCell>
+                <TableCell align="right">
+                  <Link className={classes.links} to={`/detail/${coin.id}`}>
+                    <SmallLineChart
+                      data={coin.sparkline_in_7d}
+                      per7Change={coin.price_change_percentage_7d_in_currency}
+                    />
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <TablePagination
+          className={classes.tblPagination}
+          rowsPerPageOptions={[20, 50, 100]}
+          component="div"
+          count={Allcoin.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
     </>
   );
 }

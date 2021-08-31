@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import cmcLogo from "../assets/cmc.svg";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     marginRight: theme.spacing(1),
     alignItems: "center",
+  },
+  links: {
+    textDecoration: "none",
+    color: "white",
   },
 }));
 
@@ -52,7 +57,9 @@ function Appbar({ onOpen }) {
               alt="logo"
               src={cmcLogo}
             />
-            CoinMarketCap
+            <Link className={classes.links} to={"/"}>
+              CoinMarketCap
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>

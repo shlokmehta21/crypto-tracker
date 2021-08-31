@@ -5,6 +5,7 @@ import { ListItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import cmcLogo from "../assets/cmc.svg";
 import { Close } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 
 const drawerWith = "100%";
 
@@ -45,10 +46,16 @@ const useStyles = makeStyles((theme) => {
 
 function SideDrawer({ isOpen, onClose }) {
   const classes = useStyles();
+  const history = useHistory();
   const list = () => (
     <div onClick={onClose}>
       <List>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            history.push("/");
+          }}
+        >
           <Typography>Home</Typography>
         </ListItem>
       </List>
