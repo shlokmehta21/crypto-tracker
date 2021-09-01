@@ -168,4 +168,15 @@
   .coinDesc {
     display: none;
   }
+  .icon {
+    margin-left: 4px;
+    line-height: 1;
+    vertical-align: middle;
+    height: 12px;
+    width: 12px;
+  }
+  .iconSvg {
+    height: 14px;
+    width: 14px;
+  }
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import classes from "./CoinNews.module.css";
 import { ReactComponent as ExternalLink } from "../assets/link.svg";
-function CoinNews({ newsdata, coinName, CoinDetails }) {
+import placeholderImg from "../assets/placeholderImg.jpg";
+function CoinNews({ newsdata, CoinDetails, Hours }) {
   return (
     <div className={classes.newsContainer}>
       <a href={newsdata.url} className={classes.card}>
@@ -9,14 +10,14 @@ function CoinNews({ newsdata, coinName, CoinDetails }) {
           <h3 className={classes.cardTitle}>
             {newsdata.title}
             <span className={classes.icon}>
-              <ExternalLink />
+              <ExternalLink className={classes.iconSvg} />
             </span>
           </h3>
           <p className={classes.description}>{newsdata.description}</p>
           <div className={classes.details}>
             <span className={classes.source}>
-              {newsdata.source.name} -{" "}
-              <span className={classes.time}>8 Hours ago</span>
+              {newsdata.source} -{" "}
+              <span className={classes.time}>{Hours} Hours ago</span>
             </span>
             <div className={classes.coinDesc}>
               <img src={CoinDetails.image.small} alt="bit" />
@@ -25,7 +26,10 @@ function CoinNews({ newsdata, coinName, CoinDetails }) {
           </div>
         </div>
         <div className={classes.newsImg}>
-          <img src={newsdata.urlToImage} alt="bb" />
+          <img
+            src={newsdata.image ? newsdata.image : placeholderImg}
+            alt="News Img"
+          />
         </div>
       </a>
     </div>

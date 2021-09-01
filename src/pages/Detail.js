@@ -86,13 +86,9 @@ function Detail() {
           days: "365",
         },
       }),
-      axios.get(`https://newsapi.org/v2/everything/`, {
-        params: {
-          q: id,
-          pageSize: page,
-          apiKey: "f1a0b35637594c8fbdafccea17b09bcf",
-        },
-      }),
+      axios.get(
+        `http://api.mediastack.com/v1/news?access_key=92bc771ebdc970a5be991ab071dfc660&languages=en&keywords=${id}&limit=${page}`
+      ),
       axios.get(
         `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false`
       ),
@@ -104,7 +100,8 @@ function Detail() {
       year: formatData(year.data.prices),
     });
 
-    setNewsData(news.data.articles);
+    setNewsData(news.data.data);
+    console.log(news.data.data);
     setCoinDetails(details.data);
     setIsLoading(false);
   }, [id, page]);
@@ -126,6 +123,13 @@ function Detail() {
     event.preventDefault();
     history.push("/");
   };
+
+  function randomIntFromInterval(min, max) {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const btnLabel = isLoading ? "Loading" : "Read More";
 
   return (
     <>
@@ -164,13 +168,14 @@ function Detail() {
               key={data.url}
               newsdata={data}
               CoinDetails={CoinDetails}
+              Hours={randomIntFromInterval(1, 24)}
             />
           ))}
           <Button
             className={classesMui.loadBtn}
             onClick={() => setPage((prevpage) => prevpage + 5)}
           >
-            Read More
+            {btnLabel}
           </Button>
         </Container>
       )}
