@@ -16,7 +16,7 @@ function CoinNews({ newsdata, CoinDetails, Hours }) {
           <p className={classes.description}>{newsdata.description}</p>
           <div className={classes.details}>
             <span className={classes.source}>
-              {newsdata.source} -{" "}
+              {newsdata.source.name} -{" "}
               <span className={classes.time}>{Hours} Hours ago</span>
             </span>
             <div className={classes.coinDesc}>
@@ -27,7 +27,8 @@ function CoinNews({ newsdata, CoinDetails, Hours }) {
         </div>
         <div className={classes.newsImg}>
           <img
-            src={newsdata.image ? newsdata.image : placeholderImg}
+            loading="lazy"
+            src={newsdata.urlToImage ? newsdata.urlToImage : placeholderImg}
             alt="News Img"
           />
         </div>

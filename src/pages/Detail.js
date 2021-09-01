@@ -86,9 +86,7 @@ function Detail() {
           days: "365",
         },
       }),
-      axios.get(
-        `http://api.mediastack.com/v1/news?access_key=92bc771ebdc970a5be991ab071dfc660&languages=en&keywords=${id}&limit=${page}`
-      ),
+      axios.get(`https://crypto-node-news-backend.herokuapp.com/${id}/${page}`),
       axios.get(
         `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false`
       ),
@@ -100,8 +98,8 @@ function Detail() {
       year: formatData(year.data.prices),
     });
 
-    setNewsData(news.data.data);
-    console.log(news.data.data);
+    setNewsData(news.data.articles);
+    console.log(news.data.articles);
     setCoinDetails(details.data);
     setIsLoading(false);
   }, [id, page]);
