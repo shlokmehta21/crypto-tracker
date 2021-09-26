@@ -68,19 +68,19 @@ function Detail() {
 
   const FetchGraphData = useCallback(async () => {
     const [day, week, year, news, details] = await Promise.all([
-      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
+      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart`, {
         params: {
           vs_currency: "usd",
           days: "1",
         },
       }),
-      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
+      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart`, {
         params: {
           vs_currency: "usd",
           days: "7",
         },
       }),
-      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/`, {
+      axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart`, {
         params: {
           vs_currency: "usd",
           days: "365",

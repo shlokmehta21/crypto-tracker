@@ -65,7 +65,7 @@ export default function Home() {
 
   const fetchWatchListCoins = useCallback(() => {
     axios
-      .get("https://api.coingecko.com/api/v3/coins/markets/", {
+      .get("https://api.coingecko.com/api/v3/coins/markets", {
         params: {
           vs_currency: "usd",
           ids: watchList.join(","),
