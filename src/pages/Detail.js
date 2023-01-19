@@ -86,7 +86,7 @@ function Detail() {
           days: "365",
         },
       }),
-      axios.get(`https://crypto-node-news-backend.herokuapp.com/${id}/${page}`),
+      axios.get(`https://crypto-node-news-backend.onrender.com/${id}/${page}`),
       axios.get(
         `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false`
       ),
